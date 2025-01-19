@@ -4,64 +4,87 @@
       inputs.nixpkgs.follows = "nixpkgs";
       url = "github:nix-community/fenix";
     };
+    flake-compat.url = "github:edolstra/flake-compat";
+    flake-parts = {
+      inputs.nixpkgs-lib.follows = "nixpkgs";
+      url = "github:hercules-ci/flake-parts";
+    };
+    git-hooks = {
+      inputs = {
+        flake-compat.follows = "";
+        nixpkgs.follows = "nixpkgs";
+      };
+      url = "github:cachix/git-hooks.nix";
+    };
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     treefmt-nix = {
       inputs.nixpkgs.follows = "nixpkgs";
       url = "github:numtide/treefmt-nix";
     };
   };
-  outputs = { fenix, nixpkgs, self, treefmt-nix }:
-  let
-    allSystems = [
-      "aarch64-darwin"
-      "aarch64-linux"
-      "x86_64-darwin"
-      "x86_64-linux"
-    ];
-    forAllSystems = nixpkgs.lib.genAttrs allSystems;
-  in
-  {
-    checks = forAllSystems (
-      system:
-      let
-        pkgs = import nixpkgs { inherit system; };
-        treefmtEval = treefmt-nix.lib.evalModule pkgs ./treefmt.nix;
-      in
-      {
-        formatting = treefmtEval.config.build.check self;
-      }
-    );
-    devShells = forAllSystems (
-      system:
-      let
-        packages = with pkgs; [];
-        pkgs = import nixpkgs { inherit system; };
-      in
-      {
-        default = pkgs.mkShell { inherit packages; };
-      }
-    );
-    formatter = forAllSystems (
-      system:
-      let
-        pkgs = import nixpkgs { inherit system; };
-        treefmtEval = treefmt-nix.lib.evalModule pkgs ./treefmt.nix;
-      in
-      treefmtEval.config.build.wrapper
-    );
-    packages = forAllSystems (
-      system:
-      let
-        pkgs = import nixpkgs {
-          inherit system;
-          config.allowUnfree = true;
-          overlays = [
-            fenix.overlays.default
-          ];
+  outputs =
+    inputs@{
+      fenix,
+      flake-parts,
+      git-hooks,
+      nixpkgs,
+      treefmt-nix,
+      ...
+    }:
+    flake-parts.lib.mkFlake { inherit inputs; } {
+      imports = [
+        git-hooks.flakeModule
+        treefmt-nix.flakeModule
+      ];
+      perSystem =
+        { system, ... }:
+        let
+          pkgs = import nixpkgs {
+            inherit system;
+            config.allowUnfree = true;
+            overlays = [
+              fenix.overlays.default
+            ];
+          };
+        in
+        {
+          _module.args.pkgs = pkgs;
+          devShells.default =
+            let
+              packages = [
+                pkgs.fenix.latest.toolchain
+                pkgs.rust-analyzer-nightly
+              ];
+            in
+            pkgs.mkShell { inherit packages; };
+          packages = import ./pkgs pkgs;
+          pre-commit = {
+            check.enable = true;
+            settings = {
+              hooks = {
+                actionlint.enable = true;
+                check-toml.enable = true;
+                editorconfig-checker = {
+                  enable = true;
+                  excludes = [
+                    "flake.lock"
+                  ];
+                };
+                markdownlint.enable = true;
+                yamlfmt.enable = true;
+                yamllint.enable = true;
+              };
+              src = ./.;
+            };
+          };
+          treefmt = import ./treefmt.nix pkgs;
         };
-      in
-      import ./pkgs pkgs
-    );
-  };
+      systems = [
+        "aarch64-darwin"
+        "aarch64-linux"
+        "x86_64-darwin"
+        "x86_64-linux"
+      ];
+    };
 }
 # vim: et sts=2 sw=2 ts=2
