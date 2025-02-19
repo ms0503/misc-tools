@@ -17,6 +17,7 @@
       url = "github:cachix/git-hooks.nix";
     };
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    systems.url = "github:nix-systems/default";
     treefmt-nix = {
       inputs.nixpkgs.follows = "nixpkgs";
       url = "github:numtide/treefmt-nix";
@@ -28,6 +29,7 @@
       flake-parts,
       git-hooks,
       nixpkgs,
+      systems,
       treefmt-nix,
       ...
     }:
@@ -84,12 +86,7 @@
           };
           treefmt = import ./treefmt.nix pkgs;
         };
-      systems = [
-        "aarch64-darwin"
-        "aarch64-linux"
-        "x86_64-darwin"
-        "x86_64-linux"
-      ];
+      systems = import systems;
     };
 }
 # vim: et sts=2 sw=2 ts=2
