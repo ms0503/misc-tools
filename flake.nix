@@ -1,9 +1,5 @@
 {
   inputs = {
-    fenix = {
-      inputs.nixpkgs.follows = "nixpkgs";
-      url = "github:nix-community/fenix";
-    };
     flake-compat.url = "github:edolstra/flake-compat";
     flake-parts = {
       inputs.nixpkgs-lib.follows = "nixpkgs";
@@ -25,7 +21,6 @@
   };
   outputs =
     inputs@{
-      fenix,
       flake-parts,
       git-hooks,
       nixpkgs,
@@ -44,26 +39,15 @@
           pkgs = import nixpkgs {
             inherit system;
             config.allowUnfree = true;
-            overlays = [
-              fenix.overlays.default
-            ];
           };
         in
         {
           _module.args.pkgs = pkgs;
-          devShells.default =
-            let
-              packages = [
-                pkgs.fenix.latest.toolchain
-                pkgs.rust-analyzer-nightly
-              ];
-            in
-            pkgs.mkShell {
-              inherit packages;
-              shellHook = ''
-                ${config.pre-commit.installationScript}
-              '';
-            };
+          devShells.default = pkgs.mkShell {
+            shellHook = ''
+              ${config.pre-commit.installationScript}
+            '';
+          };
           packages = import ./pkgs pkgs;
           pre-commit = {
             check.enable = true;
