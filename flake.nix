@@ -58,6 +58,7 @@
                 editorconfig-checker = {
                   enable = true;
                   excludes = [
+                    "Cargo.lock"
                     "flake.lock"
                   ];
                 };
