@@ -5,6 +5,7 @@
   getcodepoint = callPackage ./getcodepoint { };
   getemoji = callPackage ./getemoji { };
   matrics = callPackage ./matrics { };
+  skel = callPackage ./skel { };
   swww-bing = callPackage ./swww-bing { };
   unicodeescape = callPackage ./unicodeescape { };
   urlencode = callPackage ./urlencode { };
