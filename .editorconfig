@@ -10,6 +10,9 @@ spelling_language = en-US
 tab_width = 4
 trim_trailing_whitespace = true
 
+[*.{diff,patch}]
+trim_trailing_whitespace = false
+
 [*.md]
 indent_size = 2
 tab_width = 2
@@ -19,6 +22,6 @@ trim_trailing_whitespace = false
 indent_size = 2
 tab_width = 2
 
-[*.{yaml,yml}]
+[{*.{yaml,yml},.yamllint}]
 indent_size = 2
 tab_width = 2
