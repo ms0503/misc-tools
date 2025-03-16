@@ -1,9 +1,9 @@
 [dependencies]
-rand = "0.8"
+rand = "0.9"
 
 [package]
 authors = ["Sora Tonami <ms0503@outlook.com>"]
 edition = "2021"
 name = "generatehex"
 resolver = "2"
-version = "0.1.0"
+version = "0.1.1"
