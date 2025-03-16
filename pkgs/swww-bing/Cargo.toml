@@ -1,7 +1,11 @@
 [dependencies]
-chrono = "0.4.39"
-reqwest = "0.12"
-scraper = "0.22"
+chrono = "0.4"
+scraper = "0.23"
+
+[dependencies.reqwest]
+default-features = false
+features = ["charset", "http2", "rustls-tls"]
+version = "0.12"
 
 [dependencies.tokio]
 features = ["full"]
@@ -10,4 +14,4 @@ version = "1"
 [package]
 edition = "2021"
 name = "swww-bing"
-version = "0.1.0"
+version = "0.1.1"
