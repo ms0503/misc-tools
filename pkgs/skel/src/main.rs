@@ -1,10 +1,9 @@
 use clap::Parser;
 use clap::Subcommand;
 use skel::SKEL_DIR;
-use std::error::Error;
 
 #[tokio::main]
-async fn main() -> Result<(), Box<dyn Error>> {
+async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let args = Args::parse();
     let skel_dir = home::home_dir().unwrap().join(SKEL_DIR);
     let skel_dir = skel_dir.to_str().unwrap().to_string();

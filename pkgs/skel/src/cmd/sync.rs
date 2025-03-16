@@ -1,12 +1,11 @@
 use crate::SKEL_REPO;
 use crate::SKEL_REPO_REV;
 use flate2::read::GzDecoder;
-use std::error::Error;
 use std::io::ErrorKind;
 use std::io::Read;
 use tar::Archive;
 
-pub async fn run(skel_dir: String) -> Result<(), Box<dyn Error>> {
+pub async fn run(skel_dir: String) -> Result<(), Box<dyn std::error::Error>> {
     println!("Sync from GitHub ms0503/skeletons.");
     println!("Download skeletons...");
     let tarball = reqwest::get(format!("{}/archive/{}.tar.gz", SKEL_REPO, SKEL_REPO_REV));

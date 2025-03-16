@@ -1,11 +1,11 @@
-use rand::distributions::Distribution;
-use rand::distributions::Uniform;
+use rand::distr::Distribution;
+use rand::distr::Uniform;
 use std::env;
 use std::process;
 
-fn main() {
-    let mut rng = rand::thread_rng();
-    let gen = Uniform::from(0..=15);
+fn main() -> Result<(), Box<dyn std::error::Error>> {
+    let mut rng = rand::rng();
+    let gen = Uniform::new_inclusive(0, 15)?;
     let args: Vec<String> = env::args().collect();
     if args.len() < 2 {
         eprintln!("Error: cols not specified.");
@@ -21,4 +21,5 @@ fn main() {
         print!("{:x}", gen.sample(&mut rng));
     }
     println!();
+    Ok(())
 }

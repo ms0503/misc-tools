@@ -1,7 +1,6 @@
 use crate::error::SkeletonNotFoundError;
 use crate::error::SkeletonsDirNotFoundError;
 use crate::VisitDir;
-use std::error::Error;
 use std::io::stdin;
 use std::io::ErrorKind;
 use tokio::io::stderr;
@@ -11,7 +10,7 @@ pub async fn run(
     skel_dir: String,
     skel_name: String,
     target_dir: String
-) -> Result<(), Box<dyn Error>> {
+) -> Result<(), Box<dyn std::error::Error>> {
     if !tokio::fs::try_exists(&skel_dir).await? {
         eprintln!("Skeletons directory does not exist!");
         eprintln!("Please sync skeletons directory first.");

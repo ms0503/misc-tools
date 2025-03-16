@@ -30,7 +30,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     if let Err(err) = fs::create_dir(IMAGE_DIR).await {
         match err.kind() {
             std::io::ErrorKind::AlreadyExists => {}
-            _ => return Err(err)?,
+            _ => return Err(err)?
         }
     }
     fs::write(&filename, bg).await?;

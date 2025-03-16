@@ -31,14 +31,14 @@ async fn main() {
 
 #[derive(Debug, Deserialize, Serialize)]
 struct EmojiData {
-    pub icon: IconData,
+    pub icon: IconData
 }
 
 #[derive(Debug, Deserialize, Serialize)]
 struct IconData {
     #[serde(rename = "mediaType")]
     pub media_type: String,
-    pub url: String,
+    pub url: String
 }
 
 fn get_suffix(mime_type: &str) -> &str {
@@ -48,7 +48,7 @@ fn get_suffix(mime_type: &str) -> &str {
         "image/jpeg" => "jpg",
         "image/png" => "png",
         "image/webp" => "webp",
-        _ => unreachable!(),
+        _ => unreachable!()
     }
 }
 
@@ -80,11 +80,11 @@ async fn download_emoji(name: &str) {
     let data = data.unwrap();
     match fs::write(
         format!("{}.{}", name, get_suffix(&emoji.icon.media_type)),
-        data,
+        data
     )
     .await
     {
         Err(_) => eprintln!(":{}: : failed to write image file", name),
-        Ok(_) => println!(":{}: : success!", name),
+        Ok(_) => println!(":{}: : success!", name)
     }
 }

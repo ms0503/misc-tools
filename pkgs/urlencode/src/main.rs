@@ -5,20 +5,18 @@ fn main() {
     let mut stop_option = false;
     for arg in env::args().skip(1) {
         match &*arg {
-            "--" => {
+            "--" =>
                 if stop_option {
                     opts.src.push_str(" --");
                 } else {
                     stop_option = true;
-                }
-            }
-            "-d" => {
+                },
+            "-d" =>
                 if stop_option {
                     opts.src.push_str(" -d");
                 } else {
                     opts.decode = true;
-                }
-            }
+                },
             _ => {
                 if !stop_option {
                     stop_option = true;
@@ -37,7 +35,7 @@ fn main() {
 #[derive(Clone, Debug, Default, Eq, Ord, PartialEq, PartialOrd)]
 struct Opts {
     pub decode: bool,
-    pub src: String,
+    pub src: String
 }
 
 fn encode(src: String) -> String {
@@ -90,7 +88,6 @@ fn decode(src: String) -> String {
     let mut char_ind = 0usize;
     let mut char_len = 0usize;
     for c in src.chars() {
-        println!("c: {:?}\ndst: {:?}\nis_encoded: {:?}\nnum_buf: {:?}\nnum_ind: {:?}\nchar_buf: {:?}\nchar_ind: {:?}\nchar_len: {:?}\n", &c, &dst, &is_encoded, &num_buf, &num_ind, &char_buf, &char_ind, &char_len);
         if c == '%' {
             is_encoded = true;
             continue;
@@ -101,7 +98,7 @@ fn decode(src: String) -> String {
                 num_ind = 0;
                 let num = u8::from_str_radix(
                     &String::from_utf8(num_buf.clone()).expect("Error: unexpected token."),
-                    16,
+                    16
                 )
                 .expect("Error: unexpected token.");
                 println!("num: {:?}", &num);
@@ -123,7 +120,7 @@ fn decode(src: String) -> String {
                 if char_ind == char_len {
                     dst.push_str(
                         &String::from_utf8(char_buf.clone()[0..char_len].to_vec())
-                            .expect("Error: invalid utf8 sequence."),
+                            .expect("Error: invalid utf8 sequence.")
                     );
                     char_ind = 0;
                     char_len = 0;

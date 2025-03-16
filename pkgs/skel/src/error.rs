@@ -1,4 +1,3 @@
-use std::error::Error;
 use std::fmt;
 use std::fmt::Display;
 use std::fmt::Formatter;
@@ -12,7 +11,7 @@ impl Display for SkeletonNotFoundError {
     }
 }
 
-impl Error for SkeletonNotFoundError {
+impl std::error::Error for SkeletonNotFoundError {
 }
 
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
@@ -24,5 +23,5 @@ impl Display for SkeletonsDirNotFoundError {
     }
 }
 
-impl Error for SkeletonsDirNotFoundError {
+impl std::error::Error for SkeletonsDirNotFoundError {
 }
