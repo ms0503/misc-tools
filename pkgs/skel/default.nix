@@ -1,7 +1,10 @@
 { rustPlatform }:
+let
+  cargoToml = builtins.fromTOML (builtins.readFile ./Cargo.toml);
+in
 rustPlatform.buildRustPackage {
+  inherit (cargoToml.package) version;
   cargoLock.lockFile = ./Cargo.lock;
-  pname = "skel";
+  pname = cargoToml.package.name;
   src = ./.;
-  version = "2025-02-21";
 }

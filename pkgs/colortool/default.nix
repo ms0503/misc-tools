@@ -1,7 +1,10 @@
 { rustPlatform }:
+let
+  cargoToml = builtins.fromTOML (builtins.readFile ./Cargo.toml);
+in
 rustPlatform.buildRustPackage {
+  inherit (cargoToml.package) version;
   cargoLock.lockFile = ./Cargo.lock;
-  pname = "colortool";
+  pname = cargoToml.package.name;
   src = ./.;
-  version = "0.1.0";
 }

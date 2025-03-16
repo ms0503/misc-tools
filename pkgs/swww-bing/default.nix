@@ -3,15 +3,18 @@
   pkg-config,
   rustPlatform,
 }:
+let
+  cargoToml = builtins.fromTOML (builtins.readFile ./Cargo.toml);
+in
 rustPlatform.buildRustPackage {
   buildInputs = [
     openssl
   ];
+  inherit (cargoToml.package) version;
   cargoLock.lockFile = ./Cargo.lock;
   nativeBuildInputs = [
     pkg-config
   ];
-  pname = "swww-bing";
+  pname = cargoToml.package.name;
   src = ./.;
-  version = "2025-02-20";
 }

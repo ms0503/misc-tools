@@ -3,11 +3,14 @@
   openssl,
   pkg-config,
 }:
+let
+  cargoToml = builtins.fromTOML (builtins.readFile ./Cargo.toml);
+in
 rustPlatform.buildRustPackage {
   buildInputs = [ openssl ];
+  inherit (cargoToml.package) version;
   cargoLock.lockFile = ./Cargo.lock;
   nativeBuildInputs = [ pkg-config ];
-  pname = "getemoji";
+  pname = cargoToml.package.name;
   src = ./.;
-  version = "0.1.0";
 }
