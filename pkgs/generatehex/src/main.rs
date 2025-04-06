@@ -5,7 +5,7 @@ use std::process;
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     let mut rng = rand::rng();
-    let gen = Uniform::new_inclusive(0, 15)?;
+    let gnrt = Uniform::new_inclusive(0, 15)?;
     let args: Vec<String> = env::args().collect();
     if args.len() < 2 {
         eprintln!("Error: cols not specified.");
@@ -18,7 +18,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     }
     let cols = cols.unwrap();
     for _ in 0..cols {
-        print!("{:x}", gen.sample(&mut rng));
+        print!("{:x}", gnrt.sample(&mut rng));
     }
     println!();
     Ok(())

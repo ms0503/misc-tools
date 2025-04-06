@@ -10,7 +10,7 @@ version = "0.12"
 
 [package]
 authors = ["Sora Tonami <ms0503@outlook.com>"]
-edition = "2021"
+edition = "2024"
 name = "getemoji"
-resolver = "2"
-version = "0.1.0"
+resolver = "3"
+version = "0.2.0"
