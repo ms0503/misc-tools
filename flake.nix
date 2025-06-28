@@ -43,15 +43,17 @@
         ./pkgs
       ];
       perSystem =
-        { config, system, ... }:
-        let
-          pkgs = import nixpkgs {
+        {
+          config,
+          pkgs,
+          system,
+          ...
+        }:
+        {
+          _module.args.pkgs = import nixpkgs {
             inherit system;
             config.allowUnfree = true;
           };
-        in
-        {
-          _module.args.pkgs = pkgs;
           devShells.default = pkgs.mkShell {
             shellHook = ''
               ${config.pre-commit.installationScript}
