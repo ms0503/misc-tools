@@ -12,13 +12,6 @@
           hooks = {
             actionlint.enable = true;
             check-toml.enable = true;
-            editorconfig-checker = {
-              enable = true;
-              excludes = [
-                "Cargo.lock"
-                "flake.lock"
-              ];
-            };
             markdownlint = {
               enable = true;
               settings.configuration.MD013 = false;
