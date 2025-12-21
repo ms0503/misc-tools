@@ -1,6 +1,6 @@
 [dependencies]
 chrono = "0.4"
-scraper = "0.24"
+scraper = "0.25"
 
 [dependencies.reqwest]
 default-features = false
