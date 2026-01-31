@@ -4,8 +4,8 @@ scraper = "0.25"
 
 [dependencies.reqwest]
 default-features = false
-features = ["charset", "http2", "rustls-tls"]
-version = "0.12"
+features = ["charset", "http2", "rustls"]
+version = "0.13"
 
 [dependencies.tokio]
 features = ["full"]
@@ -16,4 +16,4 @@ authors = ["Sora Tonami <ms0503@outlook.com>"]
 edition = "2024"
 name = "swww-bing"
 resolver = "3"
-version = "0.2.2"
+version = "0.2.3"
