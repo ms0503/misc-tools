@@ -5,8 +5,8 @@ tokio = { features = ["full"], version = "1" }
 
 [dependencies.reqwest]
 default-features = false
-features = ["charset", "http2", "json", "rustls-tls"]
-version = "0.12"
+features = ["charset", "http2", "json", "rustls"]
+version = "0.13"
 
 [package]
 authors = ["Sora Tonami <ms0503@outlook.com>"]
