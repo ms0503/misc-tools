@@ -55,8 +55,9 @@
             config.allowUnfree = true;
           };
           devShells.default = pkgs.mkShell {
+            packages = config.pre-commit.settings.enabledPackages;
             shellHook = ''
-              ${config.pre-commit.installationScript}
+              ${config.pre-commit.shellHook}
             '';
           };
         };
