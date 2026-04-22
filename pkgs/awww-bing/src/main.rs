@@ -6,7 +6,7 @@ use tokio::fs;
 use tokio::process::Command;
 
 const BING_BASE_URL: &str = "https://www.bing.com";
-const IMAGE_DIR: &str = "/tmp/swww-bing";
+const IMAGE_DIR: &str = "/tmp/awww-bing";
 const USER_AGENT: &str = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36 Edg/133.0.0.0";
 
 #[tokio::main]
@@ -34,7 +34,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         }
     }
     fs::write(&filename, bg).await?;
-    Command::new("swww")
+    Command::new("awww")
         .args(&["img", &filename])
         .spawn()
         .unwrap()

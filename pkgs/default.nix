@@ -14,6 +14,9 @@ _: {
 
         in
         {
+          awww-bing = callPackage ./awww-bing {
+            inherit rustPlatform;
+          };
           colortool = callPackage ./colortool {
             inherit rustPlatform;
           };
@@ -27,9 +30,6 @@ _: {
             inherit rustPlatform;
           };
           skel = callPackage ./skel {
-            inherit rustPlatform;
-          };
-          swww-bing = callPackage ./swww-bing {
             inherit rustPlatform;
           };
           unicodeescape = callPackage ./unicodeescape {
